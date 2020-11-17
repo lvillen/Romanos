@@ -22,8 +22,8 @@ class RomanosTest(unittest.TestCase):
         self.assertEqual(romano_a_entero('XX'), 20)
 
     def test_errores_repes(self):
-        self.assertRaises(OverflowError, romano_a_entero, 'MMMM') #OverflowError('Demasiados tipos de M')
-        self.assertRaises(OverflowError, romano_a_entero, 'VV')
+        self.assertRaises(ValueError, romano_a_entero, 'MMMM')
+        self.assertRaises(ValueError, romano_a_entero, 'VV')
 
     def test_repes_variadas(self):
         self.assertEqual(romano_a_entero('MMLXXIII'), 2073)
@@ -32,16 +32,17 @@ class RomanosTest(unittest.TestCase):
         self.assertEqual(romano_a_entero('IV'), 4)
         self.assertEqual(romano_a_entero('IX'), 9)
         self.assertEqual(romano_a_entero('MCMLXXXIV'), 1984)
+        #self.assertEqual(romano_a_entero('CMLXXXIX'), 989)
     
     def test_restas_errores(self):
         self.assertRaises(ValueError, romano_a_entero, 'IC')
 
-'''
+
     def test_por_solucionar(self):
         self.assertRaises(ValueError, romano_a_entero, 'MMCMM') 
         self.assertRaises(ValueError, romano_a_entero, 'IIX') 
-'''
-
+        #self.assertRaises(OverflowError, romano_a_entero, 'MMCMD')
+        #self.assertRaises(OverflowError, romano_a_entero, 'MMCMC') 
 
 if __name__ == '__main__':
     unittest.main()
