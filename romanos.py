@@ -2,6 +2,7 @@ simbolos = {'M': 1000, 'D': 500, 'C': 100, 'L': 50, 'X': 10, 'V': 5, 'I': 1}
 tipo_5 =('V', 'L', 'D')
 restas = ('CM', 'CD', 'XC', 'XL', 'IX', 'IV')
 
+#DE ROMANO A ENTERO
 def simbolo_a_entero(simbolo):
     if isinstance(simbolo, str) and simbolo.upper() in simbolos:
         return simbolos[simbolo.upper()]
@@ -59,3 +60,63 @@ def romano_a_entero(romano):
         suma = suma + simbolo_a_entero(letra)
         valor_anterior = letra
     return suma
+
+#DE ENTERO A ROMANO
+def descomponer(numero):
+    # vvv return[int(d) for d in str(numero)] | ESTA OPERACIÓN ES LA MISMA QUE AQUÍ ABAJO, CON LISTCOMPREHENSION
+    if not isinstance(numero, int):
+        raise SyntaxError(f'{numero} no es un número natural.')
+
+    l = []
+    for d in str(numero):
+        l.append(int(d))
+    return l
+
+'''
+Versión de descomponer con potencias y proceso matemático, sin convertir el número a 'str'
+def descomponer(numero):
+    l = []
+    for pot in (1000, 100, 10):
+        l.append(numero//pot) # // == división entera
+        numero %= pot
+    l.append(numero)
+    return l
+'''
+unidades = ('I', 'V', 'X')
+decenas = ('X', 'L', 'C')
+centenas = ('C', 'D', 'M')
+millares = ('M')
+
+lista_ordenes = [unidades, decenas, centenas, millares]
+
+def numero_a_romano(numero):
+    if numero > 3999 or numero <1:
+        raise OverflowError('Debe estar entre 1 y 3999')
+    
+def convertir(ordenes_magnitud):
+    contador = 0
+    for orden in ordenes_magnitud[::-1]:
+        procesar_simbolo(orden, lista_ordenes[contador])
+        contar += 1
+
+def procesar_simbolo(s, clave):
+'''    
+    #Caso 1
+    return clave[s]
+    #Caso 2
+    return clave[s-1]
+'''
+
+    #Caso 3 'Mon'
+    if s == 9:
+        return clave[0] + clave[2]
+    elif s >= 5:
+        return clave[1] + clave[0] * s-5 #clave = elemento de las tuplas que tenemos arriba | Revisar esta operación matemática 
+    elif s == 4:
+        return clave[0] + clave[1]
+    else:
+        return clave[0] * s
+
+
+
+
