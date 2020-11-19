@@ -64,8 +64,6 @@ def romano_a_entero(romano):
 #DE ENTERO A ROMANO
 def descomponer(numero):
     # vvv return[int(d) for d in str(numero)] | ESTA OPERACIÓN ES LA MISMA QUE AQUÍ ABAJO, CON LISTCOMPREHENSION
-    if not isinstance(numero, int):
-        raise SyntaxError(f'{numero} no es un número natural.')
 
     l = []
     for d in str(numero):
@@ -89,34 +87,40 @@ millares = ('M')
 
 lista_ordenes = [unidades, decenas, centenas, millares]
 
-def numero_a_romano(numero):
-    if numero > 3999 or numero <1:
-        raise OverflowError('Debe estar entre 1 y 3999')
-    
 def convertir(ordenes_magnitud):
     contador = 0
-    for orden in ordenes_magnitud[::-1]:
-        procesar_simbolo(orden, lista_ordenes[contador])
-        contar += 1
+    resultado = []
+    for orden in ordenes_magnitud [::-1]:
+        resultado.append(procesar_simbolo(orden, lista_ordenes[contador]))
+        contador += 1
+    
+    return ''.join(reversed(resultado))
 
 def procesar_simbolo(s, clave):
-'''    
-    #Caso 1
-    return clave[s]
-    #Caso 2
-    return clave[s-1]
-'''
-
     #Caso 3 'Mon'
     if s == 9:
         return clave[0] + clave[2]
     elif s >= 5:
-        return clave[1] + clave[0] * s-5 #clave = elemento de las tuplas que tenemos arriba | Revisar esta operación matemática 
+        return clave[1] + clave[0] *(s-5) #clave = elemento de las tuplas que tenemos arriba | Revisar esta operación matemática 
     elif s == 4:
         return clave[0] + clave[1]
     else:
         return clave[0] * s
 
+'''    
+Caso 1
+return clave[s]
+Caso 2
+return clave[s-1]
+'''
 
+def entero_a_romano(numero):
+    if not isinstance(numero, int):
+        raise SyntaxError(f'{numero} no es un número natural.')
 
+    if numero > 3999 or numero < 1:
+        raise OverflowError(f'{numero} debe estar entre 1 y 3999')
 
+    ordenes_de_magnitud = descomponer(numero)
+    romano = convertir(ordenes_de_magnitud)
+    return romano
